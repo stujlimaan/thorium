@@ -16,6 +16,10 @@ router.post("/createAuthor",CreateAuthor.createAuthor)
 //make route publisher
 router.post("/createPublisher",CreatePublisher.createPublisher);
 
+//make put api
+router.put("/putBook", CreateBook.putBook)
+router.put("/updatePrice", CreateBook.updatePrice)
+
 
 
 //make public or global for use of 

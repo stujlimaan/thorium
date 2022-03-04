@@ -12,7 +12,8 @@ const newBookSchema= new mongoose.Schema({
     publisher:{
             type:ObjectId,
             ref:"newPublisher"
-    }
+    },
+    isHardCover:{type :Boolean, default:false },
 });
 
 module.exports=mongoose.model("newBook",newBookSchema);
