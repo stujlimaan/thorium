@@ -11,15 +11,20 @@
     router.post('/getHomePage' , MiddlewareIfLoggedIn, UserController.homePage)
 
 ### 
-    function MiddlewareIfLoggedIn( req, res, next) { if loggedIn then call the next fucntion/handler which will give us the home page feeds else res.send( " please login or register") }
+    function MiddlewareIfLoggedIn( req, res, next) 
+    { if loggedIn then call the next fucntion/handler which will give us the home page feeds else res.send( " please login or register") }
 
 # restricted API's
 ### 
-    router.get('/homePage', mid1, UserController.feeds) router.get('/profileDetails', mid1, UserController.profileDetails) router.get('/friendList', mid1, UserController.friendList) router.get('/changePassword', mid1, UserController.changePassword)
+    router.get('/homePage', mid1, UserController.feeds)
+    router.get('/profileDetails', mid1, UserController.profileDetails) 
+    router.get('/friendList', mid1, UserController.friendList) 
+    router.get('/changePassword', mid1, UserController.changePassword)
 
 # OPen-to-all API's
 ### 
-    router.get('/termsAndConditions', UserController.termsAndConditions) router.get('/register', UserController.register)
+    router.get('/termsAndConditions', UserController.termsAndConditions) 
+    router.get('/register', UserController.register)
     app.use( midGlobal)
 
 # body-parser functions:
