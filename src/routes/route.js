@@ -1,75 +1,41 @@
-const express =require("express");
-// const UserModel=require('./models/userModel')
-const UserCont=require("../controllers/userController")
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
+// const UserModel= require("../models/userModel.js")
+const UserController= require("../controllers/userController")
+const BookController= require("../controllers/bookController")
 
-router.get("/create",(req,res)=>{
-    let data = req.query;
-    console.log(data)
-    res.send(data)
+router.get("/test-me", function (req, res) {
+    res.send("My first ever api!")
 })
 
-router.post("/random/:name",function(req,res){
-    let data = req.params.name;
+router.post("/createUser", UserController.createUser  )
 
-    res.send(data);
+router.get("/getUsersData", UserController.getUsersData)
+
+router.post("/createBook", BookController.createBook  )
+
+router.get("/getBooksData", BookController.getBooksData)
+
+router.post("/updateBooks", BookController.updateBooks)
+router.post("/deleteBooks", BookController.deleteBooks)
+
+//MOMENT JS
+const moment = require('moment');
+router.get("/dateManipulations", function (req, res) {
+    
+    // const today = moment();
+    // let x= today.add(10, "days")
+
+    // let validOrNot= moment("29-02-1991", "DD-MM-YYYY").isValid()
+    // console.log(validOrNot)
+    
+    const dateA = moment('01-01-1900', 'DD-MM-YYYY');
+    const dateB = moment('01-01-2000', 'DD-MM-YYYY');
+
+    let x= dateB.diff(dateA, "days")
+    console.log(x)
+
+    res.send({ msg: "all good"})
 })
 
-router.post("/book",(req,res)=>{
-    res.send("jjhaha");
-})
-
-let players=[];
-router.post("/players",(req,res)=>{
-    let data = req.body;
-    let playerName=data.name;
-    for(let i=0;i<players.length;i++){
-       if(players[i].name==playerName){
-           res.send("players aldreaa")
-       }
-    }
-    players.push(data);
-    console.log(players)
-    res.send(players);
-})
-
-
-router.post("/players/:playersName/bookings/:bookingId",(req,res)=>{
-    let name=req.params.playersName ;
-    let id=req.params.bookingId;
-    let isPlayerPresent=false;
-    for(let i=0;i<players.length;i++){
-        if(players[i].name==name){
-            isPlayerPresent=true
-        }
-    }
-    if(!isPlayerPresent){
-        res.send("players not present")
-    }
-    let booking=req.body
-    for(let i=0;i<players.length;i++){
-        if(players[i].name==name){
-            players[i].bookings.push(booking)
-        }
-    }
-    res.send(name+id);
-})
-
-
-router.get("/name/:name/city/:cityname",(req,res)=>{
-    let name=req.params.name;
-    let city =req.params.cityname;
-    res.send(name+" "+city)
-})
-
-
-
-
-//mongooe
-
-router.post("/createuser",UserCont.userC)
-
-router.get("/getuser",UserCont.getData)
-
-
-module.exports=router;
+module.exports = router;

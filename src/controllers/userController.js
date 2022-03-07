@@ -1,17 +1,17 @@
-const userC=async (req,res)=>{
-    let data=req.body;
-    let saveData = await UserModel.create(data);
-    res.send(saveData)
-};
+const UserModel= require("../models/userModel")
 
-const getData=async (req,res)=>{
-    // let data=await UserModel.findOne();
-    // let data = await UserModel.findOneAndUpdate({"age":12},{$set:{"age":8}})
-    // let data1=await UserModel.find();
-    let bb=await UserModel.aggregate([{$group:{_id:"$by_user",age:{$sum:1}}}])
-    
-    res.send(bb);
+const createUser= async function (req, res) {
+    let data= req.body
+    let savedData= await UserModel.create(data)
+    console.log(req.newAtribute)
+    res.send({msg: savedData})
 }
 
-module.exports.userC=userC;
-module.exports.getData=getData;
+const getUsersData= async function (req, res) {
+    let allUsers= await UserModel.find()
+    console.log(req.newAtribute)
+    res.send({msg: allUsers})
+}
+
+module.exports.createUser= createUser
+module.exports.getUsersData= getUsersData
