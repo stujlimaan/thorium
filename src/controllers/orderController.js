@@ -10,7 +10,7 @@ const createOrder=async function(req,res){
     const userVerified= await UserModel.find({_id:userid}).select({_id:1})
     const productVerified= await ProductModel.find({_id:productid}).select({_id:1})
     
-//check if length>0
+//check if length>0  and
     if(userVerified.length>0 && productVerified.length>0){
         if (header["isfreeappuser"]==="true"){
             data.amount=0
@@ -19,13 +19,13 @@ const createOrder=async function(req,res){
             res.send({newOrder: result})
         }
         else if (header["isfreeappuser"]==="false") {                                                
-            const price= await ProductModel.find({_id:p_id}).select({price:1, _id:0})
+            const price= await ProductModel.find({_id:productid}).select({price:1, _id:0})
             const newprice= price[0].price
-            const bal= await UserModel.find({_id:u_id}).select({balance:1, _id:0})
+            const bal= await UserModel.find({_id:userid}).select({balance:1, _id:0})
             const newbalance= bal[0].balance
             
             if(newbalance>=newprice){                                                                          
-                const newBal= UserModel.find({_id:u_id},{$set:{balance:(newbalance-newprice)}},{$new:true})
+                const newBal= UserModel.find({_id:userid},{$set:{balance:(newbalance-newprice)}},{$new:true})
                 data.amount= newprice
                 data.isFreeAppUser= false
                 const outcome= await OrderModel.create(data)

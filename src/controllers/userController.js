@@ -9,3 +9,4 @@ const  createUser=async function(req,res){
 
 //public
 module.exports.createUser=createUser;
+

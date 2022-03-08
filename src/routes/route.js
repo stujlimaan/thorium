@@ -1,9 +1,9 @@
 const express= require("express");
 const router=express.Router();
 
-const PC=require("../contollers/productController")
-const UC=require("../contollers/userController")
-const OC=require("../contollers/orderController")
+const PC=require("../controllers/productController")
+const UC=require("../controllers/userController")
+const OC=require("../controllers/orderController")
 
 const Midd=require("../middleware/mid")
 
