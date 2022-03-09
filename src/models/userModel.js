@@ -12,6 +12,7 @@ const LoginSchema=new mongoose.Schema({
         isDeleted:false
     },
     age:Number,
+    posts:{type:[],default:[]},
     isDeleted:{
         type:Boolean,
     default:false}

@@ -20,7 +20,9 @@ router.post("/login",UC.login)
   the token is valid.
  */
 
-router.get("/users/:userId",token.tokencheck,UC.getUser)
+router.get("/users/:userId",token.tokencheck,token.authorise,UC.getUser)
+
+router.post("/users/:userId/posts",token.tokencheck,token.authorise,UC.postMessage)
 
 /**
  Write a PUT api /users/ to update user details. Pass the userId as path param in the url and update
@@ -28,7 +30,7 @@ router.get("/users/:userId",token.tokencheck,UC.getUser)
   If absent, return a suitable error.
  */
 
-router.put("/users/:userId",token.tokencheck,UC.userUpdateDetails)
+router.put("/users/:userId",token.tokencheck,token.authorise,UC.userUpdateDetails)
 
   /*
     Write a DELETE api /users/ that takes the userId in the path params and marks the isDeleted attribute

@@ -29,12 +29,13 @@ const login=async function(req,res){
 
 const getUser=async function (req,res) {
             let token=req.headers["x-auth-token"];
+            if(!token) token=req.headers["x-auth-token"]
             if(!token){
                 return res.send("token is not valid")
             }
-            if(token){
-                return res.send("token is valid")
-            }
+            // if(token){
+            //     return res.send("token is valid")
+            // }
 
             let decodedToken=jwt.verify(token,"tujliman-khan");
             if(!decodedToken){
@@ -48,6 +49,31 @@ const getUser=async function (req,res) {
 
             res.send({status:true,msg:userDetails});
   }
+
+
+  const postMessage=async function(req,res){
+      let message=req.body.message;
+    //   let token=req.headers["x-auth-token"];
+    //   if(!token) return res.send("invalid token");
+    //   let decodedToken = jwt.verify(token,"tujliman-khan");
+    //   let userToBeModified=req.params.userId;
+    //   let userLoggedIn=decodedToken.userId;
+
+    //   if(userToBeModified != userLoggedIn) return res.send({status:false,msg:"user is not allowed to modified the requeted userId"});
+
+      let userId=req.params.userId;
+      let user=await User.findById(userId)
+
+      if(!user) return res.send({status:false,msg:"no such user exists"})
+     let updatedPosts= user.posts;
+     updatedPosts.push(message)
+      let updatedUser = await User.findOneAndUpdate({_id:user._id},{posts:updatedPosts},{new:true})
+
+      return res.send({status:true,data:updatedUser})
+      
+    //   res.send(message)
+  }
+
 
   const deleteUser=async function (req,res) {
       let userid=req.params.userId;
@@ -76,3 +102,4 @@ module.exports.login=login;
 module.exports.getUser=getUser;
 module.exports.userUpdateDetails=userUpdateDetails;
 module.exports.deleteUser=deleteUser;
+module.exports.postMessage=postMessage
