@@ -1,0 +1,27 @@
+{
+  "name": "thorium",
+  "version": "1.0.0",
+  "description": "Backend cohort Feb 2022 - May 2022",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stujlimaan/thorium.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stujlimaan/thorium/issues"
+  },
+  "homepage": "https://github.com/stujlimaan/thorium#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
+  }
+}
