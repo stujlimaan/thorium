@@ -41,22 +41,23 @@ const getblogs = async function (req, res) {
             if (req.query.subcategory) {
                 obj.subcategory = req.query.subcategory
             }
-            obj.isDeleted = false
-            obj.isPublished = true
-            let data = await blogModel.find(obj)
-            if (data == false) {
-                return res.status(404).send({ status: false, msg: "The filter value is Invalid" });
+            // obj.isDeleted = false
+            // obj.isPublished = true
+            let data = await blogModel.find(obj).populate("authorId")
+            // res.send(data)
+            if (data.length == 0) {
+                return res.status(404).send({ status: false, msg: "no blogs " });
             } else {
                 res.status(200).send({ status: true, message: "Successfully fetched all blogs", data: data })
             }
-        } else {
-            return res.status(404).send({ status: false, msg: "Mandatory filter not given" })
         }
     } catch (err) {
         console.log(err)
         res.status(500).send({ msg: err.message })
     }
 }
+
+
 
 //UPDATEBLOG-
 
@@ -124,7 +125,7 @@ const deleteSpecificItem = async function (req, res) {
                 if (published) {
                     b.isPublished = req.query.isPublished
                 }
-                let result = await blogModel.findOne(obj);
+                let result = await blogModel.findOne(b);
 
                 if (result[0].authorId == req.query.authorId) {
                     let deleteData = await blogModel.updateMany({isDeleted:false}, { isDeleted: true,deletedAt: new Date() });

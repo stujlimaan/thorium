@@ -1,5 +1,6 @@
 const AuthorModel = require("../models/authorModel")
 const emailValidator = require('express-validator')
+const jwt=require('jsonwebtoken');
 
 
 const createAuthor = async function (req, res) {
@@ -22,4 +23,28 @@ const createAuthor = async function (req, res) {
 }
 
 
+
+const login=async function(req,res){
+    try{
+
+        let email = req.body.email;
+        let password=req.body.password;
+        let author= await AuthorModel.findOne({email:email,password:password})
+
+        if(!author){
+            return res.status(404).send("email and password not correct")
+        }
+
+        let token = jwt.sign({authorId:author._id.toString()},"tujliman");
+        res.setHeader("x-api-key",token)
+        // res.status(200).send(token)
+        res.status(200).send({status:"author logged in",token:token})
+
+    }catch(err){
+        return res.status(500).send({msg:err.message})
+    }
+
+}
+
 module.exports.createAuthor = createAuthor
+module.exports.login=login
