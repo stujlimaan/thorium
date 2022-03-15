@@ -99,7 +99,55 @@ const deleteUser = async function (req, res) {
     catch (err) { res.status(500).send({ msg: "Error", error: err.message }) }
 };
 
+
+const deleteSpecificItem = async function (req, res) {
+    try {
+        category = req.query.category 
+        authorId=req.query.authorId
+        tags=req.query.tags
+        subcategory=req.query.subcategory
+        if (category || authorId || tags || subcategory) {
+
+                let b = {};
+                if (category) {
+                    b.category = req.query.category
+                }
+                if (authorId) {
+                    b.authorId = req.query.authorId;
+                }
+                if (tags) {
+                    b.tags = req.query.tags
+                }
+                if (subcategory) {
+                    b.subcategory = req.query.subcategory
+                }
+                if (published) {
+                    b.isPublished = req.query.isPublished
+                }
+                let result = await blogModel.findOne(obj);
+
+                if (result[0].authorId == req.query.authorId) {
+                    let deleteData = await blogModel.updateMany({isDeleted:false}, { isDeleted: true,deletedAt: new Date() });
+                    if (deleteData) {
+                        res.status(200).send({ status: true, msg: "Blog has been deleted" });
+                    } else {
+                        res.status(404).send({ status: false, msg: "No such blog exist" });
+                    }
+                } else {
+                    res.status(404).send({ status: false, msg: "You are not a valid author to delete this blog according to conditions mentioned" })
+                }
+
+                } 
+    }
+    catch (err) {
+        res.status(500).send({ status: false, message: "Something went wrong", Error: err });
+    }
+}
+
+
+
 module.exports.updateBlog = updateBlog
 module.exports.deleteUser = deleteUser
 module.exports.createBlog = createBlog
 module.exports.getblogs = getblogs
+module.exports.deleteSpecificItem=deleteSpecificItem
