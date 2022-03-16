@@ -1,20 +1,20 @@
 const express= require("express")
 const router = express.Router()
-const AU=require ("../controllers/authorController")
-const BU=require ("../controllers/blogsController")
+const AuthorController=require ("../controllers/authorController")
+const BlogController=require ("../controllers/blogsController")
 
 const mid=require("../middleware/auth")
 
 
 
-router.post ("/authors",AU.createAuthor)
-router.post ("/blog",mid.authentication,BU.createBlog)
-router.get("/getBlogsData",mid.authentication ,BU.getblogs)
-router.put("/updateBlogsData",mid.authentication,mid.authorization ,BU.updateBlog)
-router.delete("/deleteBlog",mid.authentication,mid.authorization ,BU.deleteUser)
-router.delete("/deleteSpecific",mid.authentication,mid.authorization ,BU.deleteSpecificItem)
+router.post ("/authors",AuthorController.createAuthor)
+router.post ("/blog",mid.authentication,BlogController.createBlog)
+router.get("/getBlogsData",mid.authentication ,BlogController.getblogs)
+router.put("/updateBlogsData",mid.authentication,mid.authorization ,BlogController.updateBlog)
+router.delete("/deleteBlog",mid.authentication,mid.authorization ,BlogController.deleteUser)
+router.delete("/deleteSpecific",mid.authentication,mid.authorization ,BlogController.deleteSpecificItem)
 
-router.post("/login",AU.login)
+router.post("/login",AuthorController.login)
 
 
 module.exports=router;

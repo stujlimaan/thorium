@@ -9,6 +9,7 @@ const authentication=async function (req,res,next) {
         }
         else {
             let decodedtoken= jwt.verify(token, "tujliman")
+            console.log(decodedtoken.authorId)
             if (!decodedtoken) return res.status(401).send({status: false, msg: "token is invalid"})
             next();
         }
@@ -27,7 +28,7 @@ const authorization=async function (req,res,next) {
         }
 
         let decodeToken = jwt.verify(token,"tujliman")
-        let aID= req.params.authorId;
+        let aID= req.query.authorId;
         let dID = decodeToken.authorId;
         if(aID != dID){
             return res.status(402).send("author not allowed")
